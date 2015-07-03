@@ -1,6 +1,6 @@
 {
   "name": "ldap-verifyuser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ldap-verifyuser is a node.js library based on ldapjs, that authenticates a user against a LDAP or AD without requiring an configured administrator account.",
   "author": "Hendrik 'Xendo' Meyer <mail@xendo.red>",
   "contributors": [{
