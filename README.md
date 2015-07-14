@@ -45,3 +45,5 @@ To install you need to:
 
 This is the first inital version and will have rough edges, so please keep that in mind.
 Thus: 'here be dragons!'.
+
+Temporarily i use my hotfixed version of ldapjs to make it compatible with node 0.12.x. Whenever a new upstream version of the official ldapjs is available i will switch back to it.
