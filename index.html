@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>ldap-verifyuser by butterkekstorte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">ldap-verifyuser</h1>
+      <h2 class="project-tagline">ldap-verifyuser is a node.js library based on ldapjs, that authenticates a user against a LDAP or AD without requiring an configured administrator account</h2>
+      <a href="https://github.com/butterkekstorte/ldap-verifyuser" class="btn">View on GitHub</a>
+      <a href="https://github.com/butterkekstorte/ldap-verifyuser/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/butterkekstorte/ldap-verifyuser/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ldap-verifyuser" class="anchor" href="#ldap-verifyuser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ldap-verifyuser</h1>
+
+<h2>
+<a id="what-is-ldap-verifyuser" class="anchor" href="#what-is-ldap-verifyuser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is <code>ldap-verifyuser</code>?</h2>
+
+<p><code>ldap-verifyuser</code> is a node.js library based on <a href="http://ldapjs.org/">ldapjs</a>, that authenticates a user against a LDAP or AD without requiring an configured administrator account (which is required by MANY other implementations). This is done, by using the userprovided credentials itself to bind against the LDAP and verify the account's status.</p>
+
+<h2>
+<a id="how-does-it-work" class="anchor" href="#how-does-it-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How does it work?</h2>
+
+<p>One possible implementation of this lib would be:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> lib <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>ldap-verifyuser<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">var</span> config <span class="pl-k">=</span> {
+  server<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>ldap://&lt;ip&gt;<span class="pl-pds">'</span></span>,
+  adrdn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>MYCORP<span class="pl-cce">\\</span><span class="pl-pds">'</span></span>,
+  adquery<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>dc=MYCORP,dc=LOCAL<span class="pl-pds">'</span></span>,
+  debug<span class="pl-k">:</span> <span class="pl-c1">false</span>
+},
+username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>myacc<span class="pl-pds">'</span></span>,
+password <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>mypass<span class="pl-pds">'</span></span>
+
+<span class="pl-smi">lib</span>.<span class="pl-en">verifyUser</span>(config, username, password, <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">data</span>){
+  <span class="pl-k">if</span>(err) {
+    <span class="pl-en">console</span>.<span class="pl-c1">error</span>(<span class="pl-s"><span class="pl-pds">'</span>error<span class="pl-pds">'</span></span>, err);
+  } <span class="pl-k">else</span> {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>valid?<span class="pl-pds">'</span></span>, <span class="pl-smi">data</span>.<span class="pl-smi">valid</span>);
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>locked?<span class="pl-pds">'</span></span>, <span class="pl-smi">data</span>.<span class="pl-smi">locked</span>);
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>raw data available?<span class="pl-pds">'</span></span>, <span class="pl-smi">data</span>.<span class="pl-smi">raw</span> <span class="pl-k">?</span> <span class="pl-c1">true</span> <span class="pl-k">:</span> <span class="pl-c1">false</span>);
+  }
+  <span class="pl-c1">process</span>.<span class="pl-en">exit</span>(<span class="pl-smi">data</span>.<span class="pl-c1">status</span>);
+});</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To install you need to:</p>
+
+<ul>
+<li>Perform a <code>npm install ldap-verifyuser</code>
+</li>
+<li>You're done!</li>
+</ul>
+
+<p>(You will need <a href="https://nodejs.org/">&gt;node.js&lt;</a> of course)</p>
+
+<h2>
+<a id="here-be-dragons" class="anchor" href="#here-be-dragons" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Here be dragons!</h2>
+
+<p>This is the first inital version and will have rough edges, so please keep that in mind.
+Thus: 'here be dragons!'.</p>
+
+<p>Temporarily i use my hotfixed version of ldapjs to make it compatible with node 0.12.x. Whenever a new upstream version of the official ldapjs is available i will switch back to it.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/butterkekstorte/ldap-verifyuser">ldap-verifyuser</a> is maintained by <a href="https://github.com/butterkekstorte">butterkekstorte</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
