@@ -14,7 +14,8 @@ var config = {
   server: 'ldap://<ip>',
   adrdn: 'MYCORP\\',
   adquery: 'dc=MYCORP,dc=LOCAL',
-  debug: false
+  debug: false,
+  rawAdrdn: false
 },
 username = 'myacc',
 password = 'mypass'
@@ -30,6 +31,8 @@ lib.verifyUser(config, username, password, function(err, data){
   process.exit(data.status);
 });
 ```
+
+Set `config.rawAdrdn` to `true` to use the supplied `adrdn` without modifications/appending the username.
 
 ## Installation
 
